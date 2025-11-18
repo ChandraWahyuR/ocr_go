@@ -1,0 +1,31 @@
+✅ 1. Jika Python sebagai penyedia layanan OCR (gRPC):
+Maka:
+Python = gRPC Server
+Go = gRPC Client
+
+Client (misal: HTTP upload ke Go)
+     ↓
+[Go backend handler (REST)]
+     ↓
+[Go Usecase] 
+     ↓
+[Go gRPC Client]
+     ↓
+[Python gRPC Server]
+     ↓
+[Python Proses OCR → kirim hasil balik ke Go]
+     ↓
+[Go Usecase simpan ke DB → return ke client]
+
+
+
+ 2. gRPC itu “handler”-nya siapa?
+gRPC hanya menjadi handler jika ia adalah server.
+
+Jadi:
+Bahasa	Sebagai	gRPC berperan sebagai
+Go	Pemanggil OCR	✅ Client
+Python	Penyedia layanan OCR	✅ Server dan Handler
+
+Jadi handler ProcessImage() yang kamu tulis di Python itu setara dengan handler di HTTP. Tapi formatnya binary + proto.
+

@@ -1,0 +1,55 @@
+syntax="proto3";
+
+package ocr;
+
+option go_package = "./proto/ocr/ocrpb"; // buat folder dan letakan file yang nanti di generate
+
+message FileUploadRequest {
+    string file_name = 1;
+    bytes chunk = 2;
+  // bool is_last = 3; // optional: beri sinyal akhir stream (bisa juga handle EOF langsung)
+}
+
+message FileUploadResponse {
+    string message = 1;
+    string result_text = 2; 
+    string accuracy = 3; // contoh hasil OCR
+}
+
+service FileService {
+   rpc Upload(stream FileUploadRequest) returns(FileUploadResponse);
+}
+
+
+// contoh protoc dan grcp
+// protoc --go_out=. --go-grpc_out=. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative ocr.proto
+
+
+
+
+// Ini butuh untuk komunikasi
+/*
+    protoc --go_out=. --go-grpc_out=. \
+    --go_opt=paths=source_relative \
+    --go-grpc_opt=paths=source_relative \
+    ocr.proto
+*/
+
+/*
+Contoh path
+    protoc --proto_path=proto \
+  --go_out=internal/ocr \
+  --go-grpc_out=internal/ocr \
+  --go_opt=paths=source_relative \
+  --go-grpc_opt=paths=source_relative \
+  proto/ocr.proto
+*/
+
+// YANG DIPAKAI
+/*
+protoc --proto_path=proto \
+--go_out=internal/ocr/pb  --go-grpc_out=internal/ocr/pb  \
+  --go_opt=paths=source_relative \
+  --go-grpc_opt=paths=source_relative \
+  proto/ocr.proto
+*/

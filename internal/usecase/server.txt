@@ -1,0 +1,23 @@
+package ocr
+
+import (
+	"parkir/internal/model"
+	"parkir/internal/ocr/ocrpb"
+
+	"github.com/go-openapi/runtime/logger"
+)
+
+type ServerOcr struct {
+	ocrpb.UnimplementedFileServiceServer
+	l *logger.Logger
+}
+
+// Buat fungsi utility utnuk konversi data model dari protocol buffer
+func convertToOcrPb(ocr model.OcrPy) *ocrpb.FileUploadRequest {
+	return &ocrpb.FileUploadRequest{
+		FileName: ocr.Text,
+	}
+}
+
+
+// ini kalau go adalah server
