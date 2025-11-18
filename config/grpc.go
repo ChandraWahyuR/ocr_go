@@ -7,6 +7,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+func InitGrpcOCRClient() ocrpb.FileServiceClient { // kalau kita hanya client panggil server grcp pakai ini
 	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("failed to connect to gRPC server: %v", err)
